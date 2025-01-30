@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.login-container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: #000;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+input, select {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+select {
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Added spacing below the department dropdown */
+select {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.message {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+}
+
+.toggle-text {
+  color: #000;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.toggle-button {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
