@@ -47,15 +47,18 @@ function DeleteUser() {
 
       if (response.status === 200) {
         setMessage("User deleted successfully!");
-        // Refresh the list of users
+        // Remove the deleted user from the list
         const updatedUsers = users.filter((user) => user.id !== selectedUserId);
-        setUsers(updatedUsers);
+        console.log("Updated users:", updatedUsers); // Log the updated state
+        setUsers(updatedUsers); // Update the state
         setSelectedUserId(""); // Reset the selected user
       }
     } catch (error) {
       setMessage(error.response?.data?.error || "Failed to delete user.");
     }
   };
+
+  console.log("Component re-rendered with users:", users); // Log re-renders
 
   return (
     <div className="delete-user-page">

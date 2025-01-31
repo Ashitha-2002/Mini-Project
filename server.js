@@ -26,6 +26,18 @@ db.connect((err) => {
   console.log('Connected to the database as id ' + db.threadId);
 });
 
+//get users
+app.get("/api/users", (req, res) => {
+  db.query("SELECT * FROM users", (err, results) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    res.status(200).json(results);
+  });
+});
+
 // // Register user endpoint
 // app.post('/api/register', (req, res) => {
 //   const { email, password } = req.body;
@@ -40,6 +52,7 @@ db.connect((err) => {
 //     });
 //   });
 // });
+
 
 //login endpoint
 app.post('/api/login', (req, res) => {
@@ -99,18 +112,6 @@ app.post("/api/register", (req, res) => {
     );
   });
   }
-});
-
-//get users
-app.get("/api/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, results) => {
-    if (err) {
-      console.error("Database error:", err);
-      return res.status(500).json({ error: "Database error" });
-    }
-
-    res.status(200).json(results);
-  });
 });
 
 //delete user endpoint
