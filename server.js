@@ -26,21 +26,22 @@ db.connect((err) => {
   console.log('Connected to the database as id ' + db.threadId);
 });
 
-// Register user endpoint
-app.post('/api/register', (req, res) => {
-  const { email, password } = req.body;
+// // Register user endpoint
+// app.post('/api/register', (req, res) => {
+//   const { email, password } = req.body;
 
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) return res.status(500).json({ error: 'Hashing error' });
+//   bcrypt.hash(password, 10, (err, hashedPassword) => {
+//     if (err) return res.status(500).json({ error: 'Hashing error' });
 
-    db.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, hashedPassword], (err, result) => {
-      if (err) return res.status(500).json({ error: 'Database error' });
+//     db.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, hashedPassword], (err, result) => {
+//       if (err) return res.status(500).json({ error: 'Database error' });
 
-      res.status(201).json({ message: 'User registered successfully' });
-    });
-  });
-});
+//       res.status(201).json({ message: 'User registered successfully' });
+//     });
+//   });
+// });
 
+//login endpoint
 app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
     
@@ -76,6 +77,30 @@ app.post('/api/login', (req, res) => {
     });
   });
   
+//add user endpoint
+app.post("/api/register", (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  } else {
+      // Hash the password
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) return res.status(500).json({ error: "Hashing error" });
+
+    // Insert the user into the database
+    db.query(
+      "INSERT INTO users (email, password) VALUES (?, ?)",
+      [email, hashedPassword],
+      (err, result) => {
+        if (err) return res.status(500).json({ error: "Database error" });
+
+        res.status(201).json({ message: "User registered successfully" });
+      }
+    );
+  });
+  }
+  
+});
 
 // Start the Express server
 app.listen(PORT, () => {
