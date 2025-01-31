@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import axios for API calls
 import "../App.css";
 
 function Login() {
@@ -9,32 +10,28 @@ function Login() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  // Predefined credentials for Admin
-  const adminCredentials = {
-    email: "admin@gmail.com", // Admin email
-    password: "admin123", // Admin password
-  };
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Check login credentials based on role
-    if (role === "admin") {
-      // Check admin credentials
-      if (email === adminCredentials.email && password === adminCredentials.password) {
-        setMessage("Admin login successful!");
-        navigate("/admin-dashboard"); // Redirect to Admin dashboard
-      } else {
-        setMessage("Invalid admin credentials!");
+    try {
+      const response = await axios.post("http://localhost:5000/api/login", {
+        email,
+        password,
+        role,
+      });
+
+      if (response.status === 200) {
+        setMessage(`${role === "admin" ? "Admin" : "User"} login successful!`);
+
+        // Redirect based on role
+        if (role === "admin") {
+          navigate("/admin-dashboard");
+        } else {
+          navigate("/user-dashboard");
+        }
       }
-    } else {
-      // Check user credentials (Here, you can integrate your actual user authentication logic)
-      if (email && password) {
-        setMessage("User login successful!");
-        navigate("/user-dashboard"); // Redirect to User dashboard
-      } else {
-        setMessage("Please fill in both email and password.");
-      }
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Login failed");
     }
   };
 
@@ -61,6 +58,8 @@ function Login() {
         </button>
       </form>
       <p className="message">{message}</p>
+
+      {/* Toggle between Admin and User login */}
       <p className="toggle-text">
         {role === "admin" ? (
           <>
@@ -78,6 +77,7 @@ function Login() {
           </>
         )}
       </p>
+
       <p className="toggle-text">
         Don't have an account?{" "}
         <span className="toggle-button" onClick={() => navigate("/signup")}>
