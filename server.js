@@ -99,7 +99,37 @@ app.post("/api/register", (req, res) => {
     );
   });
   }
-  
+});
+
+//get users
+app.get("/api/users", (req, res) => {
+  db.query("SELECT * FROM users", (err, results) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    res.status(200).json(results);
+  });
+});
+
+//delete user endpoint
+app.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+
+  // Delete the user from the database
+  db.query("DELETE FROM users WHERE id = ?", [id], (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  });
 });
 
 // Start the Express server

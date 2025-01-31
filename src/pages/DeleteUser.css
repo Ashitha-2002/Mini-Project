@@ -1,17 +1,61 @@
 .delete-user-page {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .delete-user-page button {
-    padding: 10px 20px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .delete-user-page button:hover {
-    background-color: #c82333;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+}
+
+.user-list {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #c82333;
+}
+
+.message {
+  text-align: center;
+  margin-top: 20px;
+  color: #28a745; /* Green for success messages */
+}
+
+.message.error {
+  color: #dc3545; /* Red for error messages */
+}
