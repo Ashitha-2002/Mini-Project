@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import axios for API calls
+import axios from "axios";
 import "../App.css";
 
 function Login() {
@@ -10,28 +10,36 @@ function Login() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  const adminEmail = "admin@example.com"; // Admin's hardcoded email
+  const adminPassword = "admin123"; // Admin's hardcoded password
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post("http://localhost:5000/api/login", {
-        email,
-        password,
-        role,
-      });
+    if (role === "admin") {
+      // Admin login validation with hardcoded credentials
+      if (email === adminEmail && password === adminPassword) {
+        setMessage("Admin login successful!");
+        navigate("/admin-dashboard");
+      } else {
+        setMessage("Invalid admin credentials");
+      }
+    } else {
+      // User login validation by fetching from database
+      try {
+        const response = await axios.post("http://localhost:5000/api/login", {
+          email,
+          password,
+          role,
+        });
 
-      if (response.status === 200) {
-        setMessage(`${role === "admin" ? "Admin" : "User"} login successful!`);
-
-        // Redirect based on role
-        if (role === "admin") {
-          navigate("/admin-dashboard");
-        } else {
+        if (response.status === 200) {
+          setMessage("User login successful!");
           navigate("/user-dashboard");
         }
+      } catch (error) {
+        setMessage(error.response?.data?.message || "Login failed");
       }
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Login failed");
     }
   };
 
