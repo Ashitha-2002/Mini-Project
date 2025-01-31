@@ -1,0 +1,17 @@
+.delete-user-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .delete-user-page button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-user-page button:hover {
+    background-color: #c82333;
+  }

@@ -1,0 +1,76 @@
+/* AdminDashboard.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure the body takes up the full height of the page */
+}
+
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Cover the entire viewport height */
+  background-color: #f8f9fa; /* Background color for the entire page */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in the height calculation */
+}
+
+h1 {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+  font-size: 2.5rem; /* Increase font size for better visibility */
+}
+
+p {
+  text-align: center;
+  color: #555;
+  margin-bottom: 40px;
+  font-size: 1.2rem; /* Increase font size for better visibility */
+}
+
+.dashboard-buttons {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  gap: 20px; /* Space between buttons */
+  align-items: center; /* Center buttons horizontally */
+}
+
+.dashboard-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 200px; /* Fixed width for buttons */
+  text-align: center;
+}
+
+.dashboard-button.add-user {
+  background-color: #28a745;
+  color: white;
+}
+
+.dashboard-button.add-user:hover {
+  background-color: #218838;
+}
+
+.dashboard-button.delete-user {
+  background-color: #dc3545;
+  color: white;
+}
+
+.dashboard-button.delete-user:hover {
+  background-color: #c82333;
+}
+
+.dashboard-button.view-users {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.dashboard-button.view-users:hover {
+  background-color: #138496;
+}

@@ -1,0 +1,17 @@
+.view-users-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .view-users-page button {
+    padding: 10px 20px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-users-page button:hover {
+    background-color: #138496;
+  }

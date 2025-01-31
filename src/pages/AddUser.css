@@ -1,0 +1,17 @@
+.add-user-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .add-user-page button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-user-page button:hover {
+    background-color: #0056b3;
+  }

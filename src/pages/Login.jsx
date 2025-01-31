@@ -10,7 +10,7 @@ function Login() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const adminEmail = "admin@example.com"; // Admin's hardcoded email
+  const adminEmail = "admin@gmail.com"; // Admin's hardcoded email
   const adminPassword = "admin123"; // Admin's hardcoded password
 
   const handleLogin = async (e) => {
