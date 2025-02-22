@@ -1,23 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // Import useEffect
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../App.css";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user"); // Default role as "user"
+  const [role, setRole] = useState("user");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const adminEmail = "admin@gmail.com"; // Admin's hardcoded email
-  const adminPassword = "admin123"; // Admin's hardcoded password
+  const adminEmail = "admin@gmail.com";
+  const adminPassword = "admin123";
+
+  // Clear input fields when role changes
+  useEffect(() => {
+    setEmail(""); // Clear email field
+    setPassword(""); // Clear password field
+    setMessage(""); // Clear any messages
+  }, [role]); // Trigger this effect when `role` changes
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (role === "admin") {
-      // Admin login validation with hardcoded credentials
       if (email === adminEmail && password === adminPassword) {
         setMessage("Admin login successful!");
         navigate("/admin-dashboard");
@@ -25,7 +31,6 @@ function Login() {
         setMessage("Invalid admin credentials");
       }
     } else {
-      // User login validation by fetching from database
       try {
         const response = await axios.post("http://localhost:5000/api/login", {
           email,

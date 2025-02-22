@@ -21,10 +21,11 @@ h1 {
 }
 
 label {
-  display: block;
+  /* display: block; */
   margin-bottom: 10px;
-  color: #333;
+  color: #0f0e0e;
   font-weight: bold;
+  width: 100%;
 }
 
 select {
@@ -53,7 +54,7 @@ button:hover {
 .message {
   text-align: center;
   margin-top: 20px;
-  color: #28a745; /* Green for success messages */
+  color: #0f0f0f; /* Green for success messages */
 }
 
 .message.error {

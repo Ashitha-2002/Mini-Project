@@ -1,0 +1,12 @@
+/* Example: UserDashboard.css */
+.user-dashboard {
+    width: 100%;
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the top */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}

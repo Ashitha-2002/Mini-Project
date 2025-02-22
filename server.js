@@ -2,6 +2,8 @@ import express from 'express';
 import mysql from 'mysql2';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
+import multer from 'multer'
+import path from 'path'
 
 const app = express();
 const PORT = 5000;
@@ -9,6 +11,16 @@ const PORT = 5000;
 // Middleware
 app.use(express.json()); // Parse JSON request body
 app.use(cors()); // Enable CORS for cross-origin requests
+
+
+// Set up file storage
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+const upload = multer({ storage });
 
 // Database connection
 const db = mysql.createConnection({
@@ -131,6 +143,23 @@ app.delete("/api/users/:id", (req, res) => {
 
     res.status(200).json({ message: "User deleted successfully" });
   });
+});
+
+
+// API Endpoint to handle form submission
+app.post('/api/submitRequest', upload.single('signature'), (req, res) => {
+  const { name, department, email, contact, deviceType, problemDescription, reportingDate, reportingTime } = req.body;
+  const signature = req.file ? req.file.filename : null;
+
+  const query = `INSERT INTO requests (name, department, email, contact, device_type, problem_description, reporting_date, reporting_time, signature) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  
+  db.query(query, [name, department, email, contact, deviceType, problemDescription, reportingDate, reportingTime, signature], 
+      (err, result) => {
+          if (err) return res.status(500).json({ error: err });
+          res.json({ message: 'Request submitted successfully!' });
+      }
+  );
 });
 
 // Start the Express server

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ViewUsers.css"; // Import the CSS file for styling
 
 function ViewUsers() {
+  const navigate = useNavigate();
   // State to hold the list of users and any error messages
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
@@ -47,6 +49,7 @@ function ViewUsers() {
           </table>
         </div>
       )}
+      <button onClick={() => navigate("/admin-dashboard")}>Back to Dashboard</button>
     </div>
   );
 }

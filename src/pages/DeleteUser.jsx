@@ -58,8 +58,6 @@ function DeleteUser() {
     }
   };
 
-  console.log("Component re-rendered with users:", users); // Log re-renders
-
   return (
     <div className="delete-user-page">
       <h1>Delete User</h1>

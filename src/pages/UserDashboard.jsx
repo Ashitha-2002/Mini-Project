@@ -1,10 +1,11 @@
 import React from "react";
+import ServiceRequestForm from "./ServiceRequestForm";
+import "./UserDashboard.css"
 
 function UserDashboard() {
   return (
-    <div>
-      <h1>User Dashboard</h1>
-      <p>Welcome to the User Dashboard.</p>
+    <div className = "user-dashboard">
+      <ServiceRequestForm />
     </div>
   );
 }

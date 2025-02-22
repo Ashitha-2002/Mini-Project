@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
-import "../App.css";
+import "./Login.css";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -34,7 +34,7 @@ function Signup() {
     const userID = "c08HrxMJhln5GA7l2";    // Your correct user ID
 
     const templateParams = {
-      to_email: "ashithamsc@gmail.com",
+      to_email: "ashithashettyk@gmail.com",
       to_name: "Authorized Person",
       email: email,
       department: department,

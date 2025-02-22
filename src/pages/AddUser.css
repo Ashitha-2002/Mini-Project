@@ -5,29 +5,29 @@
   justify-content: center;
   min-height: 100vh;
   background-color: #f8f9fa;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
 h1 {
   text-align: center;
   color: #007bff;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 2.5rem;
 }
 
 form {
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
+/* .form-group {
+  margin-bottom: 10px;
+} */
 
 label {
   display: block;
@@ -62,7 +62,7 @@ button:hover {
 
 .message {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
   color: #28a745; /* Green for success messages */
 }
 
