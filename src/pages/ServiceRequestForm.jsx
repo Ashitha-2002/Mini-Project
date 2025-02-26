@@ -1,16 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ServiceRequestForm.css';
 
 const ServiceRequestForm = () => {
     const [formData, setFormData] = useState({
         name: '',
-        department: '',
+        department: 'Select Department',
         email: '',
         contact: '',
         deviceType: 'Laptop',
         problemDescription: '',
         signature: null
     });
+
+    const [validEmails, setValidEmails] = useState([]); // Store valid emails
+    const [emailError, setEmailError] = useState(""); // Store email validation error
+
+    const departments = [
+        "Select Department",
+        "MSc - Computer Science",
+        "MSc - Chemistry",
+        "MSc - Mathematics",
+        "MBA - Finance",
+        "MBA - TTM",
+        "M.com",
+        "MA - Economics",
+        "MA - English",
+    ];
+
+    // Fetch valid user emails from backend
+    useEffect(() => {
+        const fetchValidEmails = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/users/emails');
+                const data = await response.json();
+                console.log(data.email);
+                setValidEmails(data.emails); // Store fetched emails in state
+            } catch (error) {
+                console.error('Error fetching emails:', error);
+            }
+        };
+
+        fetchValidEmails();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,7 +52,9 @@ const ServiceRequestForm = () => {
         // Contact: Only digits and max 10 characters
         if (name === 'contact' && !/^\d{0,10}$/.test(value)) return;
 
-        // Allow normal typing in the email field (validation on submit)
+        // Clear email error when typing
+        if (name === "email") setEmailError("");
+
         setFormData({ ...formData, [name]: value });
     };
 
@@ -37,19 +70,18 @@ const ServiceRequestForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Capture current date and time automatically
         const currentDate = new Date();
         const reportingDate = currentDate.toISOString().split('T')[0];
         const reportingTime = currentDate.toTimeString().split(' ')[0];
 
-        // Validation before submission
-        if (!formData.name || !formData.department || !formData.email || !formData.contact || !formData.problemDescription) {
-            alert('Please fill out all required fields.');
+        // Validate email
+        if (!validEmails.includes(formData.email)) {
+            setEmailError("This email is not registered.");
             return;
         }
 
-        if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-            alert('Please enter a valid email address.');
+        if (!formData.name || formData.department === "Select Department" || !formData.email || !formData.contact || !formData.problemDescription) {
+            alert('Please fill out all required fields.');
             return;
         }
 
@@ -58,7 +90,6 @@ const ServiceRequestForm = () => {
             return;
         }
 
-        // Prepare FormData for backend submission
         const data = new FormData();
         data.append('name', formData.name);
         data.append('department', formData.department);
@@ -73,16 +104,16 @@ const ServiceRequestForm = () => {
         }
 
         try {
-          const response = await fetch('http://localhost:5000/api/submitRequest', { 
-            method: 'POST',
-            body: data
-        });
+            const response = await fetch('http://localhost:5000/api/submitRequest', { 
+                method: 'POST',
+                body: data
+            });
 
             if (response.ok) {
                 alert('Form submitted successfully!');
                 setFormData({
                     name: '',
-                    department: '',
+                    department: 'Select Department',
                     email: '',
                     contact: '',
                     deviceType: 'Laptop',
@@ -111,11 +142,27 @@ const ServiceRequestForm = () => {
                         </tr>
                         <tr>
                             <td>Department / Office / Section</td>
-                            <td><input type="text" name="department" value={formData.department} onChange={handleChange} required /></td>
+                            <td>
+                                <select name="department" value={formData.department} onChange={handleChange} required>
+                                    {departments.map((dept, index) => (
+                                        <option key={index} value={dept}>{dept}</option>
+                                    ))}
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td><input type="email" name="email" value={formData.email} onChange={handleChange} required /></td>
+                            <td>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    value={formData.email} 
+                                    onChange={handleChange} 
+                                    required 
+                                    style={{ borderColor: emailError ? "red" : "" }} 
+                                />
+                                {emailError && <p style={{ color: "red", fontSize: "12px" }}>{emailError}</p>}
+                            </td>
                         </tr>
                         <tr>
                             <td>Contact No</td>

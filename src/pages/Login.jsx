@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // Import useEffect
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
@@ -10,41 +10,29 @@ function Login() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const adminEmail = "admin@gmail.com";
-  const adminPassword = "admin123";
-
   // Clear input fields when role changes
   useEffect(() => {
-    setEmail(""); // Clear email field
-    setPassword(""); // Clear password field
-    setMessage(""); // Clear any messages
-  }, [role]); // Trigger this effect when `role` changes
+    setEmail("");
+    setPassword("");
+    setMessage("");
+  }, [role]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (role === "admin") {
-      if (email === adminEmail && password === adminPassword) {
-        setMessage("Admin login successful!");
-        navigate("/admin-dashboard");
-      } else {
-        setMessage("Invalid admin credentials");
-      }
-    } else {
-      try {
-        const response = await axios.post("http://localhost:5000/api/login", {
-          email,
-          password,
-          role,
-        });
+    try {
+      const response = await axios.post("http://localhost:5000/api/login", {
+        email,
+        password,
+        role,
+      });
 
-        if (response.status === 200) {
-          setMessage("User login successful!");
-          navigate("/user-dashboard");
-        }
-      } catch (error) {
-        setMessage(error.response?.data?.message || "Login failed");
+      if (response.status === 200) {
+        setMessage("Login successful!");
+        navigate(role === "admin" ? "/admin-dashboard" : "/user-dashboard");
       }
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Login failed");
     }
   };
 
@@ -72,7 +60,6 @@ function Login() {
       </form>
       <p className="message">{message}</p>
 
-      {/* Toggle between Admin and User login */}
       <p className="toggle-text">
         {role === "admin" ? (
           <>

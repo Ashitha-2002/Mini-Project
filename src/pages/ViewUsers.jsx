@@ -41,8 +41,8 @@ function ViewUsers() {
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.email}</td>
+                <tr key={user.UserID }>
+                  <td>{user.Email}</td>
                 </tr>
               ))}
             </tbody>

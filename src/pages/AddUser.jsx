@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // For making API requests
-import "./AddUser.css"; // Import the CSS file for styling
+import axios from "axios";
+import "./AddUser.css";
 
 function AddUser() {
   const navigate = useNavigate();
@@ -10,31 +10,42 @@ function AddUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [department, setDepartment] = useState("");
   const [message, setMessage] = useState("");
+
+  const departments = [
+    "MSc - Computer Science",
+    "MSc - Chemistry",
+    "MSc - Mathematics",
+    "MBA - Finance",
+    "MBA - TTM",
+    "M.Com",
+    "MA - Economics",
+    "MA - English",
+  ];
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate password and confirm password
     if (password !== confirmPassword) {
       setMessage("Passwords do not match.");
       return;
     }
 
     try {
-      // Send a POST request to the backend to add the user
       const response = await axios.post("http://localhost:5000/api/register", {
         email,
         password,
+        department,
       });
 
       if (response.status === 201) {
         setMessage("User added successfully!");
-        // Clear the form fields
         setEmail("");
         setPassword("");
         setConfirmPassword("");
+        setDepartment("");
       }
     } catch (error) {
       setMessage(error.response?.data?.error || "Failed to add user.");
@@ -72,10 +83,27 @@ function AddUser() {
             required
           />
         </div>
+        <div className="form-group">
+          <label>Department</label>
+          <select
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+            required
+          >
+            <option value="" disabled>Select Department</option>
+            {departments.map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </select>
+        </div>
         <button type="submit">Add User</button>
       </form>
       <p className="message">{message}</p>
-      <button onClick={() => navigate("/admin-dashboard")}>Back to Dashboard</button>
+      <button onClick={() => navigate("/admin-dashboard")}>
+        Back to Dashboard
+      </button>
     </div>
   );
 }

@@ -48,7 +48,7 @@ function DeleteUser() {
       if (response.status === 200) {
         setMessage("User deleted successfully!");
         // Remove the deleted user from the list
-        const updatedUsers = users.filter((user) => user.id !== selectedUserId);
+        const updatedUsers = users.filter((user) => user.UserID  !== selectedUserId);
         console.log("Updated users:", updatedUsers); // Log the updated state
         setUsers(updatedUsers); // Update the state
         setSelectedUserId(""); // Reset the selected user
@@ -69,8 +69,8 @@ function DeleteUser() {
         >
           <option value="">Select a user</option>
           {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.email}
+            <option key={user.id} value={user.UserID }>
+              {user.Email}
             </option>
           ))}
         </select>
