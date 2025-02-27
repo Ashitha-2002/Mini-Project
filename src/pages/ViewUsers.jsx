@@ -36,13 +36,17 @@ function ViewUsers() {
           <table>
             <thead>
               <tr>
+                <th>UserID</th>
                 <th>Email</th>
+                <th>Department</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.UserID }>
+                <tr key={user.UserID}>
+                  <td>{user.UserID}</td>
                   <td>{user.Email}</td>
+                  <td>{user.Department}</td>
                 </tr>
               ))}
             </tbody>
