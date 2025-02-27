@@ -5,6 +5,11 @@ import "./AdminDashboard.css"; // Import the CSS file for styling
 function AdminDashboard() {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Clear authentication token
+    navigate("/"); // Redirect to login page
+  };
+
   return (
     <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
@@ -30,6 +35,7 @@ function AdminDashboard() {
           View Users
         </button>
       </div>
+      <button className="logout-button" onClick={handleLogout}>Logout</button>
     </div>
   );
 }
